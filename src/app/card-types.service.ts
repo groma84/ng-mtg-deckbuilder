@@ -6,14 +6,9 @@ import {map} from 'rxjs/operators';
 
 @Injectable()
 export class CardTypesService {
-  private http: HttpClient;
-
   private _cardType$: Observable<string[]>;
-  private constants: ConstantsService;
 
-  constructor(http: HttpClient, constants: ConstantsService) {
-    this.http = http;
-    this.constants = constants;
+  constructor(private http: HttpClient, private constants: ConstantsService) {
   }
 
   get cardType$() {

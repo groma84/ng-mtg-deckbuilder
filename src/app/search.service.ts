@@ -9,15 +9,10 @@ import {SearchParameters} from './search-parameters';
 
 @Injectable()
 export class SearchService {
-  private http: HttpClient;
-  private constants: ConstantsService;
-
   private _searchResultByName$: Observable<Card[]>;
   private _searchResultByParameters$: Observable<Card[]>;
 
-  constructor(http: HttpClient, constants: ConstantsService) {
-    this.http = http;
-    this.constants = constants;
+  constructor(private http: HttpClient, private constants: ConstantsService) {
   }
 
   private onlyCardsWithImages(cardList) {
@@ -39,7 +34,7 @@ export class SearchService {
   }
 
   findByName(inputChange$: Observable<string>) {
-    const projection = input => this.http.get<CardList>(`${this.constants.apiUrl}cards?name=${input}`);
+    const projection = input => this.http.get<CardList>(`${this.constants.apiUrl}cards?pageSize=20&name=${input}`);
     this._searchResultByName$ = this.streamToCards(inputChange$, 500, projection);
   }
 
@@ -54,10 +49,10 @@ export class SearchService {
       });
       const typeQuery = `types=${types.join('|')}`;
 
-      const searchString = `${this.constants.apiUrl}cards?${manaCostQuery}&${typeQuery}`;
+      const searchString = `${this.constants.apiUrl}cards?pageSize=20&${manaCostQuery}&${typeQuery}`;
       return this.http.get<CardList>(searchString);
     };
-    this._searchResultByParameters$ = this.streamToCards(parameter$, 150, projection);
+    this._searchResultByParameters$ = this.streamToCards(parameter$, 250, projection);
   }
 
   get searchResultByName$() {

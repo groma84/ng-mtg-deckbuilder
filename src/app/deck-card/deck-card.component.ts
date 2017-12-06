@@ -8,16 +8,15 @@ import {Card} from '../card';
 })
 export class DeckCardComponent implements OnInit {
   @Input() card: Card;
-  @Output() addCardClicked = new EventEmitter<Card>();
+  @Output() removeCardClicked = new EventEmitter<Card>();
 
   ngOnInit() {
   }
 
-
   constructor() {
   }
 
-  addCardToDeck(_) {
-    this.addCardClicked.emit(this.card);
+  removeCardFromDeck(cardToRemove) {
+    this.removeCardClicked.emit(cardToRemove);
   }
 }

@@ -11,14 +11,9 @@ import {DeckService} from '../deck.service';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  private searchService: SearchService;
   private searchResult$: Observable<Card[]>;
 
-  private deckService: DeckService;
-
-  constructor(searchService: SearchService, deckService: DeckService) {
-    this.searchService = searchService;
-    this.deckService = deckService;
+  constructor(private searchService: SearchService, private deckService: DeckService) {
   }
 
   ngOnInit() {

@@ -17,6 +17,11 @@ export class DeckService {
     this._deck$.next(Object.assign([], this._cards));
   }
 
+  removeCard(card: Card) {
+    // TODO
+    console.log(`removeCard: ${card}`);
+  }
+
   get deck$() {
     return this._deck$.asObservable();
   }

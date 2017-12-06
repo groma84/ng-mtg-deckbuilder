@@ -14,26 +14,20 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  private byNameKeyUp = new Subject<any>();
 
-  byNameKeyUp = new Subject<any>();
-
-  findBy = 'findByName';
-  findByChanged = new Subject<any>();
+  private findBy = 'findByName';
+  private findByChanged = new Subject<any>();
 
 
-  cardTypesChanged = new Subject<any>();
-  cardType$: Observable<string[]>;
-  cardTypes: Map<string, boolean> = new Map<string, boolean>();
+  private cardTypesChanged = new Subject<any>();
+  private cardType$: Observable<string[]>;
+  private cardTypes: Map<string, boolean> = new Map<string, boolean>();
 
-  manaCost = 3;
-  manaCostChanged = new Subject<any>();
+  private manaCost = 3;
+  private manaCostChanged = new Subject<any>();
 
-  private searchService: SearchService;
-  private cardTypesService: CardTypesService;
-
-  constructor(cardTypesService: CardTypesService, searchService: SearchService) {
-    this.searchService = searchService;
-    this.cardTypesService = cardTypesService;
+  constructor(private cardTypesService: CardTypesService, private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -82,9 +76,9 @@ export class SearchComponent implements OnInit {
       }).pipe(filter(x => {
         let anyTrue = false;
         x.types.forEach((v, _) => anyTrue = anyTrue || v);
-        
+
         return anyTrue;
-    });
+    }));
 
     this.searchService.findByParameters(searchParameter$);
   }

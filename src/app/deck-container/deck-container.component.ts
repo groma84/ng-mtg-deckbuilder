@@ -20,8 +20,8 @@ export class DeckContainerComponent implements OnInit {
     this.deck$ = this.deckService.deck$;
   }
 
-  addCard(card) {
-    this.deckService.addCard(card);
+  removeCard(card) {
+    this.deckService.removeCard(card);
   }
 
 }
