@@ -52,14 +52,14 @@ export class SearchComponent implements OnInit {
     this.cardTypesService.cardType$.pipe(
       map(arr => {
         const newData = new Map<string, boolean>();
-        arr.forEach(val => newData[val] = false);
+        arr.forEach(val => newData.set(val, false));
         return newData;
       })
     ).subscribe(x => this.cardTypes = x);
 
     const cardTypeArrayChange$ = new BehaviorSubject<Map<string, boolean>>(this.cardTypes);
     this.cardTypesChanged.subscribe(x => {
-      this.cardTypes[x] = !this.cardTypes[x];
+      this.cardTypes.set(x, !this.cardTypes.get(x));
       cardTypeArrayChange$.next(this.cardTypes);
     });
 
@@ -79,7 +79,12 @@ export class SearchComponent implements OnInit {
         };
 
         return p;
-      }).pipe(filter(x => !this.isEmptyObject(x.types)));
+      }).pipe(filter(x => {
+        let anyTrue = false;
+        x.types.forEach((v, _) => anyTrue = anyTrue || v);
+        
+        return anyTrue;
+    });
 
     this.searchService.findByParameters(searchParameter$);
   }

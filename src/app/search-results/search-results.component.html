@@ -1,5 +1,5 @@
 <ol>
-  <li *ngFor="let card of (searchResult$ | async)">
+  <li *ngFor="let card of (searchResult$ | async)" (dblclick)="addCardToDeck(card)">
     {{card.name}}
   </li>
 </ol>

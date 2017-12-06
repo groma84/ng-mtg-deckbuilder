@@ -24,23 +24,40 @@ export class SearchService {
     return cardList.cards.filter(card => !!card.imageUrl);
   }
 
-  findByName(inputChange$: Observable<string>) {
-    this._searchResultByName$ = inputChange$.pipe(
-      debounceTime(500),
+  private sortCards(cardList) {
+    return cardList.sort((c1, c2) => c1.name.localeCompare(c2.name));
+  }
+
+  private streamToCards(stream$: Observable<any>, debounceTimeMs: number, switchMapFunc): Observable<Card[]> {
+    return stream$.pipe(
+      debounceTime(debounceTimeMs),
       distinctUntilChanged(),
-      switchMap(input => this.http.get<CardList>(`${this.constants.apiUrl}cards?name=${input}`)),
-      map(this.onlyCardsWithImages)
+      switchMap(switchMapFunc),
+      map(this.onlyCardsWithImages),
+      map(this.sortCards)
     );
   }
 
+  findByName(inputChange$: Observable<string>) {
+    const projection = input => this.http.get<CardList>(`${this.constants.apiUrl}cards?name=${input}`);
+    this._searchResultByName$ = this.streamToCards(inputChange$, 500, projection);
+  }
+
   findByParameters(parameter$: Observable<SearchParameters>) {
-    this._searchResultByParameters$ = parameter$.pipe(
-      switchMap(p => {
-        const searchString = `${this.constants.apiUrl}cards?cmc=${p.manaCost}`;
-        return this.http.get<CardList>(searchString);
-      }),
-      map(this.onlyCardsWithImages)
-    );
+    const projection = p => {
+      const types = [];
+      const manaCostQuery = `cmc=${p.manaCost}`;
+      p.types.forEach((val, key) => {
+        if (val) {
+          types.push(key);
+        }
+      });
+      const typeQuery = `types=${types.join('|')}`;
+
+      const searchString = `${this.constants.apiUrl}cards?${manaCostQuery}&${typeQuery}`;
+      return this.http.get<CardList>(searchString);
+    };
+    this._searchResultByParameters$ = this.streamToCards(parameter$, 150, projection);
   }
 
   get searchResultByName$() {
