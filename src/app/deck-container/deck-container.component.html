@@ -1,0 +1,5 @@
+<ol>
+  <li *ngFor="let card of (deck$ | async)">
+    <app-deck-card [card]="card" (addCardClicked)="addCard($event)"></app-deck-card>
+  </li>
+</ol>
