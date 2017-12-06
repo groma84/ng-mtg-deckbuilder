@@ -1,0 +1,5 @@
+<ol>
+  <li *ngFor="let card of (searchResult$ | async)">
+    {{card.name}}
+  </li>
+</ol>

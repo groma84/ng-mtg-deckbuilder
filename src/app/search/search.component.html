@@ -1,0 +1,39 @@
+<form #form="ngForm" novalidate (ngSubmit)="submit(form)">
+
+  <fieldset>
+    <input type="radio" value="findByName" name="findBy"
+           [ngModel]="findBy"
+           (change)="findByChanged.next($event)">
+    <label for="byName">Name</label>
+    <input type="text" name="byName" id="byName"
+           [disabled]="findBy !== 'findByName'"
+           (keyup)='byNameKeyUp.next($event)'>
+  </fieldset>
+
+  <fieldset>
+    <input type="radio" value="findByOther" name="findBy"
+           [ngModel]="findBy"
+           (change)="findByChanged.next($event)">
+
+
+    <fieldset [disabled]="findBy !== 'findByOther'">
+      <h2>Find by attributes</h2>
+      <h3>Type</h3>
+      <ol>
+        <li *ngFor="let cardTypeName of (cardType$ | async)">
+          <input type="checkbox" name="{{cardTypeName}}" id="{{cardTypeName}}"
+                 [checked]="cardTypes[cardTypeName]"
+                 (change)="cardTypesChanged.next(cardTypeName)"/>
+          <label [attr.for]="cardTypeName">{{cardTypeName}}</label>
+        </li>
+      </ol>
+
+      <h3>Mana Cost</h3>
+      <label for="manaCost">Mana Cost</label>
+      <input type="number" name="manaCost" id="manaCost" min="0" max="20" pattern="0-9"
+             [ngModel]="manaCost"
+             (change)="manaCostChanged.next($event)">
+    </fieldset>
+
+  </fieldset>
+</form>
