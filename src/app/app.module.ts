@@ -13,6 +13,7 @@ import {SearchComponent} from './search/search.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
 import { DeckContainerComponent } from './deck-container/deck-container.component';
 import { DeckCardComponent } from './deck-card/deck-card.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DeckCardComponent } from './deck-card/deck-card.component';
     SearchComponent,
     SearchResultsComponent,
     DeckContainerComponent,
-    DeckCardComponent
+    DeckCardComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

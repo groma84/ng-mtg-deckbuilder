@@ -1,26 +1,34 @@
-<form #form="ngForm" novalidate (ngSubmit)="submit(form)">
+<form #form="ngForm" novalidate (ngSubmit)="noOp(form)" class="search__form">
+  <h2>Search cards</h2>
 
   <fieldset>
-    <input type="radio" value="findByName" name="findBy"
-           [ngModel]="findBy"
-           (change)="findByChanged.next($event)">
-    <label for="byName">Name</label>
-    <input type="text" name="byName" id="byName"
-           [disabled]="findBy !== 'findByName'"
-           (keyup)='byNameKeyUp.next($event)'>
+    <div>
+      <input type="radio" value="findByName" name="findBy" id="findByName"
+             [ngModel]="findBy"
+             (change)="findByChanged.next($event)">
+      <label for="findByName">Find by name</label>
+    </div>
+    <div class="search__find-input-container">
+      <label for="byName">Name</label>
+      <input type="text" name="byName" id="byName"
+             [disabled]="findBy !== 'findByName'"
+             (keyup)='byNameKeyUp.next($event)'>
+    </div>
   </fieldset>
 
   <fieldset>
-    <input type="radio" value="findByOther" name="findBy"
-           [ngModel]="findBy"
-           (change)="findByChanged.next($event)">
+    <div>
+      <input type="radio" value="findByOther" name="findBy" id="findByOther"
+             [ngModel]="findBy"
+             (change)="findByChanged.next($event)">
+      <label for="findByOther">Find by attribute</label>
+    </div>
 
+    <fieldset [disabled]="findBy !== 'findByOther'" class="search__find-input-container">
+      <div class="search__find-inputs-attribute-name">Type</div>
 
-    <fieldset [disabled]="findBy !== 'findByOther'">
-      <h2>Find by attributes</h2>
-      <h3>Type</h3>
-      <ol>
-        <li *ngFor="let cardTypeName of (cardType$ | async)">
+      <ol *ngIf="cardType$ | async; else loading; let cardTypes" class="search__types-list">
+        <li *ngFor="let cardTypeName of cardTypes">
           <input type="checkbox" name="{{cardTypeName}}" id="{{cardTypeName}}"
                  [checked]="cardTypes[cardTypeName]"
                  (change)="cardTypesChanged.next(cardTypeName)"/>
@@ -28,11 +36,18 @@
         </li>
       </ol>
 
-      <h3>Mana Cost</h3>
-      <label for="manaCost">Mana Cost</label>
-      <input type="number" name="manaCost" id="manaCost" min="0" max="20" pattern="0-9"
-             [ngModel]="manaCost"
-             (change)="manaCostChanged.next($event)">
+      <ng-template #loading>
+        <app-loading-spinner></app-loading-spinner>
+      </ng-template>
+
+      <div class="search__find-inputs-attribute-name">Mana Cost</div>
+      <div class="search__find-inputs-nested">
+        <label for="manaCost">Mana Cost</label>
+        <input type="number" name="manaCost" id="manaCost" class="search__number-input"
+               min="0" max="20" pattern="0-9"
+               [ngModel]="manaCost"
+               (change)="manaCostChanged.next($event)">
+      </div>
     </fieldset>
 
   </fieldset>

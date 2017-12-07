@@ -1,0 +1,36 @@
+@import '../variables';
+
+.content__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.content__main {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.content__header {
+  border-bottom: 1px solid $theme_dark_color;
+}
+
+.content__footer {
+  justify-self: flex-end;
+  border-top: 1px solid $theme_dark_color;
+}
+
+.search__search-container {
+  border-right: 1px solid $theme_dark_color;
+}
+
+.search__search-results {
+  flex-grow: 1;
+
+  display: grid;
+  grid-gap: 15px;
+  grid-auto-rows: 300px;
+  grid-auto-columns: 200px;
+  grid-auto-flow: row;
+}

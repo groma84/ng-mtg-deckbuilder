@@ -83,18 +83,5 @@ export class SearchComponent implements OnInit {
     this.searchService.findByParameters(searchParameter$);
   }
 
-  submit(form) {
-
-  }
-
-  private isEmptyObject(obj) {
-    for (const prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
+  noOp(_) {}
 }
