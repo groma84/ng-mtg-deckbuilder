@@ -1,1 +1,5 @@
-<div>{{card.name}} <span (click)="removeCardFromDeck(card)">X</span> </div>
+<div class="deck__card-item">
+  <span class="deck__card-item-cmc-badge">{{card.cmc | number:0}}</span>
+  <span class="deck__card-item-name">{{card.name}}</span>
+  <span (click)="removeCardFromDeck(card)" class="deck__card-item-remove-button">X</span>
+</div>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {debounceTime, distinctUntilChanged, map, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators';
 import {CardList} from './card-list';
 import {ConstantsService} from './constants.service';
 import {Card} from './card';
@@ -35,7 +35,8 @@ export class SearchService {
 
   findByName(inputChange$: Observable<string>) {
     const projection = input => this.http.get<CardList>(`${this.constants.apiUrl}cards?pageSize=20&name=${input}`);
-    this._searchResultByName$ = this.streamToCards(inputChange$, 500, projection);
+    const withMinimumLength$ = inputChange$.pipe(filter(x => x.length > 2));
+    this._searchResultByName$ = this.streamToCards(withMinimumLength$, 500, projection);
   }
 
   findByParameters(parameter$: Observable<SearchParameters>) {

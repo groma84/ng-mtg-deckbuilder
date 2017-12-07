@@ -1,4 +1,4 @@
-<ol>
+<ol class="deck__card-list">
   <li *ngFor="let card of (deck$ | async)">
     <app-deck-card [card]="card" (removeCardClicked)="removeCard($event)"></app-deck-card>
   </li>

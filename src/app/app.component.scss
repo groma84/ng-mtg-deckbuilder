@@ -34,3 +34,8 @@
   grid-auto-columns: 200px;
   grid-auto-flow: row;
 }
+
+.deck__container {
+  border-left: 1px solid $theme_dark_color;
+  width: 15rem;
+}

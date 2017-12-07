@@ -1,0 +1,33 @@
+@import '../../variables';
+
+.deck__card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid $theme_medium_color;
+
+  box-shadow: 0.1rem 0.1rem 0 darken($theme_medium_color, 10);
+
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.deck__card-item-remove-button {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+
+  padding: 0 0.25rem;
+}
+
+.deck__card-item-cmc-badge {
+  background-color: $theme_dark_color;
+  color: $theme_accent_color;
+  border-radius: 5rem;
+  padding: 0.5rem;
+}
+
+.deck__card-item-name {
+  padding: 0.25rem;
+}

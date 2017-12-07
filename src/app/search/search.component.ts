@@ -82,6 +82,4 @@ export class SearchComponent implements OnInit {
 
     this.searchService.findByParameters(searchParameter$);
   }
-
-  noOp(_) {}
 }
