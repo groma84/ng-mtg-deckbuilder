@@ -1,5 +1,7 @@
-<ol>
-  <li *ngFor="let card of (searchResult$ | async)" (dblclick)="addCardToDeck(card)">
-    {{card.name}}
+<ol class="search-results__container">
+  <li *ngFor="let card of (searchResult$ | async)"
+      (dblclick)="addCardToDeck(card)"
+      class="search-results__card">
+    <img [src]="card.imageUrl" [alt]="card.name" class="search-results__card-image"/>
   </li>
 </ol>

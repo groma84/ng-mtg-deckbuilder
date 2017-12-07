@@ -1,0 +1,24 @@
+@import '../../variables';
+
+.search-results__container {
+  padding: 0.25rem;
+
+  /*display: grid;
+  grid-gap: 15px;
+  grid-auto-rows: $card-height;
+  grid-auto-columns: $card-width;
+  grid-auto-flow: column;*/
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-results__card {
+  cursor: pointer;
+  margin: 0.5rem 0.25rem;
+}
+
+.search-results__card-image {
+  width: $card-width;
+  height: $card-height;
+}

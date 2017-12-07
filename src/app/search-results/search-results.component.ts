@@ -4,6 +4,7 @@ import {SearchService} from '../search.service';
 import {Card} from '../card';
 import {merge} from 'rxjs/observable/merge';
 import {DeckService} from '../deck.service';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-results',
@@ -12,6 +13,7 @@ import {DeckService} from '../deck.service';
 })
 export class SearchResultsComponent implements OnInit {
   private searchResult$: Observable<Card[]>;
+
 
   constructor(private searchService: SearchService, private deckService: DeckService) {
   }
