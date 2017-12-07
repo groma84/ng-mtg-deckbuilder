@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Card} from './card';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
@@ -9,17 +9,28 @@ export class DeckService {
 
   private _deck$ = new BehaviorSubject<Card[]>(this._cards);
 
-  constructor() { }
+  constructor() {
+  }
 
 
   addCard(card: Card) {
     this._cards.push(card);
-    this._deck$.next(Object.assign([], this._cards));
+    this.publishChanges();
   }
 
   removeCard(card: Card) {
-    // TODO
-    console.log(`removeCard: ${card}`);
+    const indexToRemove = this._cards.findIndex(c => c.id === card.id);
+
+    if (indexToRemove !== -1) {
+      this._cards.splice(indexToRemove, 1);
+      this.publishChanges();
+    }
+  }
+
+  private publishChanges() {
+    this._cards = this._cards.sort((a, b) => a.name.localeCompare(b.name));
+    this._deck$.next(Object.assign([], this._cards));
+
   }
 
   get deck$() {
