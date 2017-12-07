@@ -14,6 +14,7 @@ import {SearchResultsComponent} from './search-results/search-results.component'
 import { DeckContainerComponent } from './deck-container/deck-container.component';
 import { DeckCardComponent } from './deck-card/deck-card.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import {LoadingService} from './loading.service';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     FormsModule,
     HttpClientModule
   ],
-  providers: [ConstantsService, CardTypesService, DeckService, SearchService],
+  providers: [ConstantsService, CardTypesService, DeckService, LoadingService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

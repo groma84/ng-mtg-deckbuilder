@@ -1,7 +1,11 @@
-<ol class="search-results__container">
-  <li *ngFor="let card of (searchResult$ | async)"
+<ol class="search-results__container" *ngIf="!isLoading; else loading">
+  <li *ngFor="let card of searchResults"
       (dblclick)="addCardToDeck(card)"
       class="search-results__card">
     <img [src]="card.imageUrl" [alt]="card.name" class="search-results__card-image"/>
   </li>
 </ol>
+
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

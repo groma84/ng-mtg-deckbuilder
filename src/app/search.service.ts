@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 import {CardList} from './card-list';
 import {ConstantsService} from './constants.service';
 import {Card} from './card';
 import {SearchParameters} from './search-parameters';
+import {LoadingService} from './loading.service';
 
 @Injectable()
 export class SearchService {
   private _searchResultByName$: Observable<Card[]>;
   private _searchResultByParameters$: Observable<Card[]>;
 
-  constructor(private http: HttpClient, private constants: ConstantsService) {
+  constructor(private http: HttpClient, private constants: ConstantsService, private loadingService: LoadingService) {
   }
 
   private onlyCardsWithImages(cardList) {
@@ -27,6 +28,7 @@ export class SearchService {
     return stream$.pipe(
       debounceTime(debounceTimeMs),
       distinctUntilChanged(),
+      tap(() => this.loadingService.start()),
       switchMap(switchMapFunc),
       map(this.onlyCardsWithImages),
       map(this.sortCards)
